@@ -1,0 +1,9 @@
+.idea
+*.iml
+target
+pinyougou-common.iml
+/pinyougou/pinyougou-manage-web/*.iml
+/pinyougou/pinyougou-pojo/pinyougou-pojo.iml
+/pinyougou/pinyougou-manage-web/pinyougou-manage-web.iml
+/pinyougou/pinyougou-dao/pinyougou-dao.iml
+pinyougou-sellergoods.iml
