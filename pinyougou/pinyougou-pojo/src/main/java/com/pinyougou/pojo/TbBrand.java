@@ -12,11 +12,8 @@ public class TbBrand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     private String firstChar;
-
     private static final long serialVersionUID = 1L;
 
     public Long getId() {

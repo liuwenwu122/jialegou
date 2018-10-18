@@ -27,8 +27,17 @@
     </bean>
 
     <!--spring整合mybatis,配置包扫描,扫描dao层并自动生成代理对象-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.pinyougou.mapper"></property>
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+    <!--<property name="basePackage" value="com.pinyougou.mapper"></property>-->
+    <!--</bean>-->
+
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.pinyougou.mapper"/>
+        <property name="properties">
+            <value>
+                mappers=tk.mybatis.mapper.common.Mapper
+            </value>
+        </property>
     </bean>
 
 </beans>
