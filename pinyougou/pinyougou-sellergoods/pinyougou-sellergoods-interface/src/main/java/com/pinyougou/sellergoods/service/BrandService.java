@@ -22,4 +22,13 @@ public interface BrandService extends BaseService<TbBrand> {
      * @return List<TbBrand>
      */
    List<TbBrand> testPage(Integer pageNum, Integer rows);
+
+
+    /**
+     * 分页搜索
+     * @param pageNum
+     * @param rows
+     * @param brand
+     */
+    PageResult brandSearch(Integer pageNum, Integer rows, TbBrand brand);
 }

@@ -61,7 +61,6 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public void deleteByIds(Serializable[] ids) {
-
         if (ids != null && ids.length > 0) {
             for (Serializable id : ids) {
                 mapper.deleteByPrimaryKey(id);

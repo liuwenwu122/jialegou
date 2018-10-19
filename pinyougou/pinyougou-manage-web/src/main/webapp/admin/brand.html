@@ -16,39 +16,17 @@
     <script src="../plugins/angularjs/pagination.js"></script>
     <link rel="stylesheet" href="../plugins/angularjs/pagination.css">
 
-    <script type="text/javascript">
+    <script src="../js/base_pagination.js"></script>
+    <script src="../js/service/brandService.js"></script>
+    <script src="../js/controller/brandController.js"></script>
+    <script src="../js/controller/baseController.js"></script>
 
-        var app = angular.module("pinyougou", ['pagination']);
 
-        app.controller("brandController", function ($scope, $http) {
-            // 初始化分页参数
-            $scope.paginationConf = {
-                currentPage: 1,// 当前页号
-                totalItems: 10,// 总记录数
-                itemsPerPage: 5,// 页大小
-                perPageOptions: [5, 10, 15, 20, 30],// 可选择的每页大小
-                onChange:function () {	// 当上述的参数发生变化了后触发
-                    $scope.reloadList();
-                }
-            };
-
-            $scope.reloadList = function () {
-                $scope.findPage($scope.paginationConf.currentPage, $scope.paginationConf.itemsPerPage)
-            };
-
-            $scope.findPage = function (pageNum,rows) {
-                $http.get("../brand/findPage.do?page=" + pageNum + "&rows=" + rows).success(
-                    function (response) {
-                        $scope.paginationConf.totalItems = response.total;
-                        $scope.brandList = response.rows;
-                    })
-            };
-        });
-    </script>
 
 
 </head>
-<body ng-app="pinyougou" ng-controller="brandController" ng-init="reloadList()" class="hold-transition skin-red sidebar-mini">
+<body ng-app="pinyougou" ng-controller="brandController" ng-init="reloadList()"
+      class="hold-transition skin-red sidebar-mini">
 <!-- .box-body -->
 <div class="box-header with-border">
     <h3 class="box-title">品牌管理</h3>
@@ -63,10 +41,12 @@
         <div class="pull-left">
             <div class="form-group form-inline">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default" title="新建" data-toggle="modal"
+                    <button type="button" class="btn btn-default" ng-click="brand={}" title="新建" data-toggle="modal"
                             data-target="#editModal"><i class="fa fa-file-o"></i> 新建
                     </button>
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" ng-click="delete()" class="btn btn-default" title="删除"><i
+                            class="fa fa-trash-o"></i> 删除
+                    </button>
                     <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i
                             class="fa fa-refresh"></i> 刷新
                     </button>
@@ -75,8 +55,9 @@
         </div>
         <div class="box-tools pull-right">
             <div class="has-feedback">
-                品牌名称：<input> 品牌首字母：<input>
-                <button class="btn btn-default">查询</button>
+                品牌名称：<input ng-model="searchBrand.name">
+                品牌首字母：<input ng-model="searchBrand.firstChar">
+                <button class="btn btn-default" ng-click="reloadList()">查询</button>
             </div>
         </div>
         <!--工具栏/-->
@@ -96,12 +77,13 @@
             </thead>
             <tbody>
             <tr ng-repeat="entity in brandList">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="deleteSelectionIds($event,entity.id)"></td>
                 <td>{{entity.id}}</td>
                 <td>{{entity.name}}</td>
                 <td>{{entity.firstChar}}</td>
                 <td class="text-center">
-                    <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal">修改
+                    <button type="button" ng-click="findOne(entity.id)" class="btn bg-olive btn-xs" data-toggle="modal"
+                            data-target="#editModal">修改
                     </button>
                 </td>
             </tr>
@@ -130,16 +112,16 @@
                 <table class="table table-bordered table-striped" width="800px">
                     <tr>
                         <td>品牌名称</td>
-                        <td><input class="form-control" placeholder="品牌名称"></td>
+                        <td><input ng-model="brand.name" class="form-control" placeholder="品牌名称"></td>
                     </tr>
                     <tr>
                         <td>首字母</td>
-                        <td><input class="form-control" placeholder="首字母"></td>
+                        <td><input ng-model="brand.firstChar" class="form-control" placeholder="首字母"></td>
                     </tr>
                 </table>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">保存</button>
+                <button class="btn btn-success" ng-click="save()" data-dismiss="modal" aria-hidden="true">保存</button>
                 <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
             </div>
         </div>
